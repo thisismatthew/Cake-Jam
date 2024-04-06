@@ -52,11 +52,17 @@ public class IcingPainter : MonoBehaviour
     }
 
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void Paint()
     {
         Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 localPos = _spriteRenderer.transform.InverseTransformPoint(mousePos);
         Vector2Int pixel = WorldToPixel(localPos);
+        
+        Debug.Log("mousepos" + mousePos);
+        Debug.Log("localpos" + localPos);
+        Debug.Log("pixel" + pixel);
+        
 
         for (int x = pixel.x - 5; x < pixel.x + 5; x++)
         {
@@ -65,6 +71,7 @@ public class IcingPainter : MonoBehaviour
                 if (x >= 0 && x < _texture.width && y >= 0 && y < _texture.height)
                 {
                     _texture.SetPixel(x, y, brushColor[0]);
+                    Debug.Log("Painted" +"x="+ x + " y= " + y);
                 }
             }
         }
