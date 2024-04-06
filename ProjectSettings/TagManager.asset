@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cake
   - Stampable
+  - Decoration
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - Cake
   - Water
   - UI
-  - 
+  - Bench
   - 
   - 
   - 
@@ -43,9 +44,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Bench
+    uniqueID: 2004347429
+    locked: 0
   - name: Utensils
     uniqueID: 2334221697
     locked: 0
   - name: Icing
     uniqueID: 1424072475
+    locked: 0
+  - name: Tray
+    uniqueID: 2632861799
+    locked: 0
+  - name: Decorations
+    uniqueID: 965649293
     locked: 0

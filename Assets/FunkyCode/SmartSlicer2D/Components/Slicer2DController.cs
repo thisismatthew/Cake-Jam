@@ -8,9 +8,10 @@ using UnityEngine.EventSystems;
 namespace Slicer2D {
 
 	public class Slicer2DController : MonoBehaviour {
+
 		public enum SliceType {Linear, LinearCut, LinearTracked, LinearTrail, Complex, ComplexCut, ComplexClick, ComplexTracked, ComplexTrail, Point, Polygon, Explode, Create, MergerComplex, MergerPolygon};
 		public static Color[] slicerColors = {Color.black, Color.green, Color.yellow , Color.red, new Color(1f, 0.25f, 0.125f)};
-
+		public bool slicingEnabled = true;
 		public SliceType sliceType = SliceType.Complex;
 
 		// Slicer2DController.Get()
@@ -94,6 +95,20 @@ namespace Slicer2D {
 			mergerPolygonControllerObject.SetController(gameObject, input, visuals, sliceLayer, eventHandler);
 		}
 
+		public void EnableSlicing()
+		{
+			this.enabled = true;
+
+		}
+		
+		//temporarily disable slicing
+		public void DisableSlicing()
+		{
+			if (!slicingEnabled)
+			{
+				this.enabled = false;
+			}
+		}
 		public bool BlockedByUI() {
 			if (UIBlocking == false) {
 				return(false);
@@ -122,6 +137,14 @@ namespace Slicer2D {
 			if (BlockedByUI() == false) {
 				InputController.zPosition = visuals.zPosition;
 				input.Update();
+				if(slicingEnabled==false)
+				{
+					DisableSlicing();
+				}
+				else if (slicingEnabled==true)
+				{
+					EnableSlicing();
+				}
 			}
 
 			Vector2 pos = input.GetInputPosition();
