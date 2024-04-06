@@ -40,6 +40,16 @@ public class SpriteStampingTool : MonoBehaviour
             Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Instantiate(stampPrefab, new Vector3(cursorPosition.x, cursorPosition.y, 0), Quaternion.identity);
             stampTimer = stampInterval; // Reset the timer
+            // Play the stamp sound here
+            if (stampSound != null)
+            {
+                audioSource.PlayOneShot(stampSound);
+            }
         }
+    }
+    
+    public void ChangeStampPrefab(GameObject newStampPrefab)
+    {
+        stampPrefab = newStampPrefab;
     }
 }
