@@ -38,16 +38,23 @@ public class SpriteStampingTool : MonoBehaviour
         if (stampTimer <= 0)
         {
             Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(stampPrefab, new Vector3(cursorPosition.x, cursorPosition.y, 0), Quaternion.identity);
-            stampTimer = stampInterval; // Reset the timer
-            // Play the stamp sound here
-            if (stampSound != null)
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.transform.position,
+                cursorPosition - (Vector2)Camera.main.transform.position);
+            Debug.Log("Hit: " + hit.collider);
+            Debug.Log("Tag: " + hit.collider.gameObject.tag);
+            if (hit.collider != null && hit.collider.gameObject.CompareTag("Cake"))
             {
-                audioSource.PlayOneShot(stampSound);
+                Instantiate(stampPrefab, new Vector3(cursorPosition.x, cursorPosition.y, 0), Quaternion.identity);
+                stampTimer = stampInterval; // Reset the timer
+                // Play the stamp sound here
+                if (stampSound != null)
+                {
+                    audioSource.PlayOneShot(stampSound);
+                }
             }
         }
     }
-    
+
     public void ChangeStampPrefab(GameObject newStampPrefab)
     {
         stampPrefab = newStampPrefab;
