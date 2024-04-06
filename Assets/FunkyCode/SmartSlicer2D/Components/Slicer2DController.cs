@@ -109,6 +109,11 @@ namespace Slicer2D {
 				this.enabled = false;
 			}
 		}
+		
+		public void toggleSlicing()
+		{
+			slicingEnabled = !slicingEnabled;
+		}
 		public bool BlockedByUI() {
 			if (UIBlocking == false) {
 				return(false);

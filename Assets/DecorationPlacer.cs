@@ -22,17 +22,17 @@ public class DecorationPlacer : MonoBehaviour
 
     void Update()
     {
-       if (Input.GetMouseButton(0))
-        {
-            if(decoration == null)
-            {
-                grabDecoration();
-            }
-            else
-            {
-                placeDecoration();
-            }
-        }
+       if (Input.GetMouseButtonDown(0))
+       {
+           if(decoration == null)
+           {
+               grabDecoration();
+           }
+           else
+           {
+               placeDecoration();
+           }
+       }
     }
     
     //load the decoration in the bowl into the decoration placer
@@ -62,7 +62,7 @@ public class DecorationPlacer : MonoBehaviour
         {
             return;
         }
-
+        
         // Instantiate a new decoration at the cursor's position
         Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Instantiate(decoration, new Vector3(cursorPosition.x, cursorPosition.y, 0), Quaternion.identity);
