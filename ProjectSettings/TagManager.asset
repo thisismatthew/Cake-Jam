@@ -3,12 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Cake
+  - Stampable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Cake
   - Water
   - UI
   - 
@@ -43,4 +45,7 @@ TagManager:
     locked: 0
   - name: Utensils
     uniqueID: 2334221697
+    locked: 0
+  - name: Icing
+    uniqueID: 1424072475
     locked: 0

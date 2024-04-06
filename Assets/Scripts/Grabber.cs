@@ -17,7 +17,7 @@ public class Grabber : MonoBehaviour
     void Update()
     {
         if (!active) return;
-        
+
         if(Input.GetMouseButtonDown(0))
         {
             if (HeldItem != null)
@@ -30,7 +30,8 @@ public class Grabber : MonoBehaviour
             if (hit.collider != null)
             {
                 HeldItem = hit.transform.gameObject;
-                offsetPos = HeldItem.transform.position;
+                // Calculate the offset at the moment of grabbing
+                offsetPos = (Vector2)HeldItem.transform.position - (Vector2)ray.origin;
             }
         }
 
@@ -40,8 +41,8 @@ public class Grabber : MonoBehaviour
             Vector2 center = HeldItem.GetComponent<PolygonCollider2D>().bounds.center;
             Debug.DrawLine(center, pos, Color.red);
             Debug.Log("Items Actual Pos:" + HeldItem.transform.position + " | center of it:" + center + " | mouseposition: " +pos);
-            HeldItem.transform.position = pos;
-            
+            // Apply the offset when setting the position
+            HeldItem.transform.position = pos + offsetPos;
         }
     }
 }
