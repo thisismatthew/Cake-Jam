@@ -1,72 +1,83 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class IcingPainter : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private SpriteRenderer _spriteRenderer;
+    private Texture2D _texture;
+    public Color[] brushColor;
+    private bool _isPainting = false;
 
-    // Update is called once per frame
-    private Texture2D texture; // Texture to store the icing
-    private Color[] icingColour; // Array to store the colour of the icing
-    private bool isPainting = false; // Flag to check if the player is painting
-    private SpriteRenderer _spriteRenderer; // Reference to the SpriteRenderer component
-
+    
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        // Clone the texture to avoid modifying the original asset.
-        texture = Instantiate(_spriteRenderer.sprite.texture);
-        Rect spriteRect= _spriteRenderer.sprite.rect;
-        _spriteRenderer.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
-        
-        //EXAMPLE TEST set brush colour to red FOR EXAMPLE
-        icingColour = new Color[] {Color.red, };
+        InitializeTexture();
+        brushColor = new Color[] { Color.red }; // Default brush color is red
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            isPainting = true;
+            _isPainting = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        else if (Input.GetMouseButtonUp(0))
         {
-            isPainting = false;
+            _isPainting = false;
         }
 
-        if (isPainting)
+        if (_isPainting)
         {
-            Vector2? pixelUV = GetMouseTexturePosition();
-            if(pixelUV.HasValue)
+            Paint();
+        }
+    }
+
+    private void InitializeTexture()
+    {
+        Sprite originalSprite = _spriteRenderer.sprite;
+        Texture2D originalTexture = originalSprite.texture;
+
+        // Create a new Texture2D with the same dimensions and format
+        _texture = new Texture2D(originalTexture.width, originalTexture.height, TextureFormat.RGBA32, false);
+        _texture.filterMode = FilterMode.Point;
+        _texture.wrapMode = TextureWrapMode.Clamp;
+
+        // Manually copy pixels from the original texture
+        Color[] pixels = originalTexture.GetPixels();
+        _texture.SetPixels(pixels);
+        _texture.Apply();
+
+        // Create a new sprite with the new texture
+        _spriteRenderer.sprite = Sprite.Create(_texture, originalSprite.rect, new Vector2(0.5f, 0.5f), originalSprite.pixelsPerUnit);
+    }
+
+
+    private void Paint()
+    {
+        Vector2 mousePos =Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 localPos = _spriteRenderer.transform.InverseTransformPoint(mousePos);
+        Vector2Int pixel = WorldToPixel(localPos);
+
+        for (int x = pixel.x - 5; x < pixel.x + 5; x++)
+        {
+            for (int y = pixel.y - 5; y < pixel.y + 5; y++)
             {
-                Paint((Vector2)pixelUV);
+                if (x >= 0 && x < _texture.width && y >= 0 && y < _texture.height)
+                {
+                    _texture.SetPixel(x, y, brushColor[0]);
+                }
             }
         }
+        _texture.Apply();
     }
-    
-    void Paint(Vector2 pixelUV)
-    {
-        int x = (int)(pixelUV.x * texture.width);
-        int y = (int)(pixelUV.y * texture.height);
-        texture.SetPixels(x, y, 1, 1, icingColour);
-        texture.Apply();
-    }
-    
-    // ReSharper disable Unity.PerformanceAnalysis
-    Vector2? GetMouseTexturePosition()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit) && hit.collider == GetComponent<Collider>())
-        {
-            Vector2 localPoint = hit.textureCoord;
-            return localPoint;
-        }
-        return null;
-    }
-    
 
-   
+    private Vector2Int WorldToPixel(Vector2 localPoint)
+    {
+        Vector2Int pixel = new Vector2Int(
+            Mathf.FloorToInt((localPoint.x + 0.5f) * _texture.width),
+            Mathf.FloorToInt((localPoint.y + 0.5f) * _texture.height)
+        );
+
+        return pixel;
+    }
 }
