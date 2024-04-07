@@ -34,6 +34,7 @@ public class Grabber : MonoBehaviour
                 // Calculate the offset at the moment of grabbing
                 offsetPos = (Vector2)HeldItem.transform.position - (Vector2)ray.origin;
                 HeldItem.GetComponent<Collider2D>().enabled = false;
+                HeldItem.transform.SetParent(null);
             }
         }
 
