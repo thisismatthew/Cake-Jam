@@ -50,6 +50,7 @@ public class DecorationsFiller : MonoBehaviour
     // }
     
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void SetDecorationsInChildBowls(GameObject[] decorations){
         int i =0;
         foreach (GameObject bowl in GetChildBowlsList())
@@ -108,12 +109,18 @@ public class DecorationsFiller : MonoBehaviour
     //TODO: Fill decorations based on the cake type
     private string[] RetrieveDecorations(CakeCardType type)
     {
+        //debug output card type
+        Debug.Log(type);
         switch (type)
         {
-            case CakeCardType.AussieRulesField:
+        case CakeCardType.AussieRulesField:
+            Debug.Log("YEEEE");
+            Debug.Log("ShreddedCoconut, Clinkers, Smarties, Bullets, Marshmallow, MuskStick");
             return new string[] { "ShreddedCoconut", "Clinkers", "Smarties", "Bullets", "Marshmallow", "MuskStick" };
         case CakeCardType.BeautifulButterfly:
-            return new string[] { "Smarties", "Licorice", "Freckles", "Jellybeans", "Popcorn", "Teeth" };
+            //output string of all decorations in debug
+            Debug.Log("Smarties, Licorice, Jubes, JellyBeans, Chips, Teeth");
+            return new string[] { "Smarties", "Licorice", "Jubes", "JellyBeans", "Chips", "Teeth" };
         case CakeCardType.BrownBear:
             return new string[] { "ChocBiscuit", "ShreddedCoconut", "Smarties", "Jubes", "JellyBeans", "Licorice" };
         case CakeCardType.CricketBat:
@@ -166,13 +173,13 @@ public class DecorationsFiller : MonoBehaviour
             return new string[] { "Licorice", "LifeSavers", "ShreddedCoconut", "Wafer", "Smarties", "JellyBeans" };
             default:
                 throw new ArgumentException("Unknown CakeCardType");
+                
         }
 
     }
 
     public void FillDecorations(CakeCardType type)
     {
-        
         loadDecorationsByNames(RetrieveDecorations(type));
         SetDecorationsInChildBowls(decorations);
     }
