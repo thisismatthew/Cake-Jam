@@ -13,7 +13,7 @@ public class FaxMachineManager : MonoBehaviour
 
     public CakeCardType checkRequiredCard()
     {
-        if (requestIndex == 0) return CakeCardType.GeorgeGirraffe;
+        if (requestIndex == 0) return CakeCardType.GeorgeGiraffe;
         return Requests[requestIndex - 1].type;
     }
     

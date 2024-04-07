@@ -14,11 +14,25 @@ public class CardManager : MonoBehaviour
     public Image ActiveCardImage;
     public GameObject CardSelector;
     public Grabber grabberRef;
+    public DecorationsFiller decorationsManager;
     public void SetActiveCard(Sprite img, CakeCardType type)
     {
         ActiveCardImage.transform.parent.gameObject.SetActive(true);
         ActiveCardImage.sprite = img;
         currentType = type;
+        SetDecorations(type);
+    }
+
+    //sets the decorations to fill the bowls with based on the type of cake card
+    private void SetDecorations(CakeCardType type)
+    {
+        decorationsManager.EmptyBowls();
+        decorationsManager.FillDecorations(type);
+    }
+
+    public void SetDecorationsManager(DecorationsFiller decorationsFiller)
+    {
+        decorationsManager = decorationsFiller;
     }
 
     public void OpenCardScroller()
@@ -27,7 +41,8 @@ public class CardManager : MonoBehaviour
         grabberRef.gameObject.SetActive(false);
         FindObjectOfType<MouseMovesCamNearScreenEdge>().enabled = false;
     }
-
+    
+    
     // Start is called before the first frame update
     void Start()
     {

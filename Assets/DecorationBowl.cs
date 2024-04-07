@@ -39,12 +39,16 @@ public class DecorationBowl : MonoBehaviour
         curentDecorationSet = true;
     }
     
+    //empties the bowl, sets the current decoration to null, and sets the current decoration set to false
     public void EmptyBowl()
     {
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
         }
+        currentDecoration = null;
+        curentDecorationSet = false;
+        
     }
     
 }
