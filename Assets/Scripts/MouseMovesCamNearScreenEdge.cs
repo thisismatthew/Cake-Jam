@@ -31,7 +31,7 @@ public class MouseMovesCamNearScreenEdge : MonoBehaviour
 
         if (mousePosX > Screen.width - margin)
         {
-            if (camIndex < 3 && !justSwapped)
+            if (camIndex < 1 && !justSwapped)
             {
                 camIndex++;
                 justSwapped = true;
@@ -48,7 +48,7 @@ public class MouseMovesCamNearScreenEdge : MonoBehaviour
 
     public void SetCamera()
     {
-        for (int c = 0; c <= 2; c++)
+        for (int c = 0; c <= 1; c++)
         {
             if (c == camIndex)
                 Cameras[c].Priority = 10;
