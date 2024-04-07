@@ -6,21 +6,23 @@ public class DecorationBowl : MonoBehaviour
 {
     
     [SerializeField] public GameObject currentDecoration;
+    private bool curentDecorationSet = false;
     // Start is called before the first frame update
     
     void Start()
     {
-    
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.childCount<7)
+        if (curentDecorationSet)
         {
-            TopUpBowl();
+            if (transform.childCount < 7)
+            {
+                TopUpBowl();
+            }
         }
-        
     }
 
     private void TopUpBowl()
@@ -34,6 +36,7 @@ public class DecorationBowl : MonoBehaviour
     public void setBowlDecoration(GameObject decoration)
     {
         currentDecoration = decoration;
+        curentDecorationSet = true;
     }
     
     public void EmptyBowl()
