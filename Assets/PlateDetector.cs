@@ -11,12 +11,6 @@ public class PlateDetector : MonoBehaviour
         // Make the object a child of the plate
         other.transform.SetParent(transform);
 
-        // Get the bounds of the plate
-        Bounds plateBounds = GetComponent<Collider2D>().bounds;
-
-        // Set the position of the object to the center of the plate's bounds
-        other.transform.position = plateBounds.center;
-
         // If the object has a Rigidbody2D, you might want to further ensure it doesn't move.
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)
