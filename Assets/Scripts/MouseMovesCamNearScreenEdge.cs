@@ -17,7 +17,7 @@ public class MouseMovesCamNearScreenEdge : MonoBehaviour
         
         SetCamera();
         float mousePosX = Input.mousePosition.x;
-        Debug.Log(mousePosX);
+        //Debug.Log(mousePosX);
         
         if (mousePosX < margin)
         {
