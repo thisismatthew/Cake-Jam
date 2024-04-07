@@ -162,7 +162,7 @@ namespace Slicer2D {
 							switch(id) {
 								case 0:
 									bool down = input[id].pressed;
-									bool getMouseButton = UnityEngine.Input.GetMouseButton(0);
+									bool getMouseButton = UnityEngine.Input.GetMouseButton(1);
 
 									if (getMouseButton == true) {
 										if (down == false) {
